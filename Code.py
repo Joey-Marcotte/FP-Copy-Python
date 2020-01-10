@@ -603,58 +603,35 @@ def game_scene():
             else:
                 break
 
-            if a_button == constants.button_state["button_just_pressed"]:
-                for a_button_number in range(len(abutton)):
-                    if abutton[a_button_number].x > 0:
-                        if stage.collide(abutton[a_button_number].x, abutton[a_button_number].y,
-                                        abutton[a_button_number].x, abutton[a_button_number].y,
-                                        ):
-                            # when you press designated button when it is on top of sprite
-                            abutton[a_button_number].move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
-                            rand_amount_number = random.randint(0, 3+1)
-                            if rand_amount_number == 1:
-                                random_selection = random.randint(0, 6+1)
-                                if random_selection == 1:
-                                    abutton_count = 1
-                                else if random_selection == 2:
-                                    bbutton_count = 1
-                                else if random_selection == 3:
-                                    upbutton_count = 1
-                                else if random_selection == 4:
-                                    downbutton_count = 1
-                                else if random_selection == 5:
-                                    leftbutton_count = 1
-                                else if random_selection == 6:
-                                    rightbutton_count = 1
-                            else if rand_amount_number == 1:
-                                random_selection = random.randint(0, 6+1)
-                                if random_selection == 1:
-                                    abutton_count = 2
-                                else if random_selection == 2:
-                                    bbutton_count = 2
-                                else if random_selection == 3:
-                                    upbutton_count = 2
-                                else if random_selection == 4:
-                                    downbutton_count = 2
-                                else if random_selection == 5:
-                                    leftbutton_count = 2
-                                else if random_selection == 6:
-                                    rightbutton_count = 2
-                            else if rand_amount_number == 1:
-                                random_selection = random.randint(0, 6+1)
-                                if random_selection == 1:
-                                    abutton_count = 3
-                                else if random_selection == 2:
-                                    bbutton_count = 3
-                                else if random_selection == 3:
-                                    upbutton_count = 3
-                                else if random_selection == 4:
-                                    downbutton_count = 3
-                                else if random_selection == 5:
-                                    leftbutton_count = 3
-                                else if random_selection == 6:
-                                    rightbutton_count = 3
-                                    
+        for a_button_number in range(len(abutton)):
+            if abutton[a_button_number].x > 0 and a_button == constants.button_state["button_just_pressed"]:
+                if stage.collide(abutton[a_button_number].x, abutton[a_button_number].y,
+                                     abutton[a_button_number].x, abutton[a_button_number].y + 7,
+                                     a_button_sprite.x, a_button_sprite.y,
+                                     a_button_sprite.x, a_button_sprite.y + 7):
+                        # when you press designated button when it is on top of sprite
+                    abutton[a_button_number].move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
+                    rand_amount_number = random.randint(1, 2)
+                    for loop_counter in range(rand_amount_number):
+                        random_selection = random.randint(1, 6)
+                        if random_selection == 1:
+                            abutton_count = 1
+                            loop_counter = loop_counter + 1
+                        elif random_selection == 2:
+                            bbutton_count = 1
+                            loop_counter = loop_counter + 1
+                        elif random_selection == 3:
+                            upbutton_count = 1
+                            loop_counter = loop_counter + 1
+                        elif random_selection == 4:
+                            downbutton_count = 1
+                            loop_counter = loop_counter + 1
+                        elif random_selection == 5:
+                            leftbutton_count = 1
+                            loop_counter = loop_counter + 1
+                        elif random_selection == 6:
+                            rightbutton_count = 1
+                            loop_counter = loop_counter + 1
         # redraw sprite list
         game.render_sprites(sprites + abutton + bbutton + upbutton + downbutton + leftbutton + rightbutton)
         game.tick()  # wait until refresh rate finishes
