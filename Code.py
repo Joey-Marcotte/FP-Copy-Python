@@ -18,8 +18,8 @@ def blank_white_reset_scene():
     # this function is the splash scene game loop
     # do house keeping to ensure everythng is setup
     # set up the NeoPixels
-    # pixels = neopixel.NeoPixel(board.NEOPIXEL, 5, auto_write=False)
-    # pixels.deinit() # and turn them all off
+    pixels = neopixel.NeoPixel(board.NEOPIXEL, 5, auto_write=False)
+    pixels.deinit() # and turn them all off
     # reset sound to be off
     sound = ugame.audio
     sound.stop()
@@ -720,7 +720,7 @@ def game_scene():
                             rightbutton_count = 1
                             loop_counter = loop_counter + 1
                     show_abutton()
-            
+
 
         for b_button_number in range(len(bbutton)):
             if bbutton[b_button_number].x > 0 and b_button == constants.button_state["button_just_pressed"]:
@@ -887,16 +887,32 @@ def game_scene():
                             loop_counter = loop_counter + 1
                     show_rightbutton()
 
+        if number_of_lives == 5:
+            for pixel_number in range(0, 5):
+                    pixels[pixel_number] = (0, 10, 0)
+                    pixels.show()
+        if number_of_lives == 4:
+            for pixel_number in range(1):
+                    pixels[pixel_number] = (25, 0, 0)
+                    pixels.show()
+        if number_of_lives == 3:
+            for pixel_number in range(2):
+                    pixels[pixel_number] = (25, 0, 0)
+                    pixels.show()
+        if number_of_lives == 2:
+            for pixel_number in range(3):
+                    pixels[pixel_number] = (25, 0, 0)
+                    pixels.show()
+        if number_of_lives == 1:
+            for pixel_number in range(4):
+                    pixels[pixel_number] = (25, 0, 0)
+                    pixels.show()
         if number_of_lives == 0:
             jungle_joe[1].move(jungle_joe[0].x, jungle_joe[0].y)
             jungle_joe[0].move(constants.OFF_SCREEN_X, constants.OFF_SCREEN_Y)
             for pixel_number in range(5):
                     pixels[pixel_number] = (25, 0, 0)
                     pixels.show()
-                    # Wait for 1 seconds
-                    time.sleep(0.25)
-                    # need to release the NeoPixels
-                    pixels.deinit()
             while True:
                 if logs[0].y < 50:
                     if jungle_joe[1].x > logs[0].x:
@@ -912,6 +928,8 @@ def game_scene():
                     while True:
                         jungle_joe[1].move(jungle_joe[1].x, jungle_joe[1].y + constants.JUNGLE_JOE_Y_SPEED)
                         if jungle_joe[1].y > constants.SCREEN_Y:
+                            # need to release the NeoPixels
+                            pixels.deinit()
                             game_over_scene(score)
                         # redraw sprite list
                         game.render_sprites(jungle_joe)
